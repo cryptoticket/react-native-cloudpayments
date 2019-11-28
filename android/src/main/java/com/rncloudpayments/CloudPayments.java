@@ -6,6 +6,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
 import ru.cloudpayments.sdk.cp_card.CPCard;
+import ru.cloudpayments.sdk.three_ds.ThreeDsDialogFragment;
 
 public class CloudPayments extends ReactContextBaseJavaModule {
   public CloudPayments(ReactApplicationContext reactContext) {
@@ -51,6 +52,17 @@ public class CloudPayments extends ReactContextBaseJavaModule {
       String cryptoprogram = card.cardCryptogram(publicId);
 
       promise.resolve(cryptoprogram);
+    } catch (Exception e) {
+      e.printStackTrace();
+      promise.reject(e.getMessage());
+    }
+  }
+
+  @ReactMethod
+  public void show3DSForm(String acsUrl, String transactionId, String paReq, Promise promise) {
+    try {
+      ThreeDsDialogFragment.newInstance(acsUrl, transactionId, paReq).show(getCurrentActivity().getFragmentManager(), "3DS");
+      promise.resolve(null);
     } catch (Exception e) {
       e.printStackTrace();
       promise.reject(e.getMessage());
