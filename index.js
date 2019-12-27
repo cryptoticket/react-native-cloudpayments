@@ -26,6 +26,14 @@ export default class RNCloudPayments {
       return createError(error);
     }
   }
+
+  static async show3DSForm(acsUrl, transactionId, paReq) {
+    try {
+      return await RNCloudPaymentsModule.show3DSForm(acsUrl, transactionId, paReq);
+    } catch(error) {
+      return createError(error);
+    }
+  }
 }
 
 class RNCloudPaymentsError extends Error {
